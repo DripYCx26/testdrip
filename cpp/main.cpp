@@ -26,6 +26,8 @@
 #include <cstring>
 #include <functional>
 #include <sstream>
+#include <fstream>
+#include <map>
 
 // =============================================================================
 // Types
@@ -52,9 +54,31 @@ static const char* RESET = "\033[0m";
 // Helpers
 // =============================================================================
 
+static std::map<std::string, std::string> load_dotenv() {
+    std::map<std::string, std::string> m;
+    std::ifstream f(".env");
+    if (!f) return m;
+    std::string line;
+    while (std::getline(f, line)) {
+        if (line.empty() || line[0] == '#') continue;
+        size_t eq = line.find('=');
+        if (eq == std::string::npos) continue;
+        std::string key = line.substr(0, eq);
+        std::string val = line.substr(eq + 1);
+        // Trim trailing whitespace (common in .env)
+        while (!key.empty() && (key.back() == ' ' || key.back() == '\t')) key.pop_back();
+        while (!val.empty() && (val.back() == ' ' || val.back() == '\t' || val.back() == '\r')) val.pop_back();
+        if (!key.empty()) m[key] = val;
+    }
+    return m;
+}
+
 static std::string env_or(const char* name, const std::string& fallback) {
     const char* val = std::getenv(name);
     if (val && val[0] != '\0') return std::string(val);
+    static std::map<std::string, std::string> dotenv = load_dotenv();
+    auto it = dotenv.find(name);
+    if (it != dotenv.end() && !it->second.empty()) return it->second;
     return fallback;
 }
 
@@ -67,6 +91,27 @@ static int64_t now_ms() {
 // =============================================================================
 // Checks
 // =============================================================================
+
+static CheckResult check_customer_create(drip::Client& client, std::string& customer_id_out) {
+    auto start = now_ms();
+    try {
+        drip::CreateCustomerParams params;
+        std::ostringstream ext_id;
+        ext_id << "cpp_health_check_" << now_ms();
+        params.external_customer_id = ext_id.str();
+        params.metadata["test"] = "true";
+        params.metadata["source"] = "cpp_health_check";
+
+        auto result = client.createCustomer(params);
+        int dur = static_cast<int>(now_ms() - start);
+        customer_id_out = result.id;
+
+        return {"Customer Create", true, dur, "Created " + result.id, "external_id: " + params.external_customer_id};
+    } catch (const drip::DripError& e) {
+        int dur = static_cast<int>(now_ms() - start);
+        return {"Customer Create", false, dur, std::string("Failed: ") + e.what(), ""};
+    }
+}
 
 static CheckResult check_connectivity(drip::Client& client) {
     auto start = now_ms();
@@ -207,7 +252,8 @@ int main(int argc, char** argv) {
         }
     }
 
-    std::string customer_id = env_or("TEST_CUSTOMER_ID", "seed-customer-1");
+    std::string test_customer_id = env_or("TEST_CUSTOMER_ID", "");
+    std::string customer_id;
 
     std::cout << std::endl;
     std::cout << "Drip C++ SDK Health Check v" << DRIP_SDK_VERSION << std::endl;
@@ -215,6 +261,7 @@ int main(int argc, char** argv) {
 
     // Initialize client
     drip::Config config;
+    config.api_key = env_or("DRIP_API_KEY", "");
     std::string api_url = env_or("DRIP_API_URL", "");
     if (!api_url.empty()) {
         // Ensure /v1 suffix
@@ -229,7 +276,7 @@ int main(int argc, char** argv) {
 
         if (verbose) {
             std::cout << DIM << "  API URL: " << (config.base_url.empty() ? "(default)" : config.base_url) << RESET << std::endl;
-            std::cout << DIM << "  Customer: " << customer_id << RESET << std::endl;
+            std::cout << DIM << "  Customer: " << (!test_customer_id.empty() && test_customer_id != "seed-customer-1" ? test_customer_id : "will create") << RESET << std::endl;
             std::cout << std::endl;
         }
 
@@ -241,8 +288,21 @@ int main(int argc, char** argv) {
         results.push_back(check_authentication(client));
 
         if (!quick) {
-            results.push_back(check_track_usage(client, customer_id));
-            results.push_back(check_record_run(client, customer_id));
+            // Get customer: use TEST_CUSTOMER_ID if set, otherwise create one
+            if (!test_customer_id.empty() && test_customer_id != "seed-customer-1") {
+                customer_id = test_customer_id;
+                results.push_back({"Customer", true, 0, "Using " + customer_id, "(TEST_CUSTOMER_ID)"});
+            } else {
+                CheckResult cr = check_customer_create(client, customer_id);
+                results.push_back(cr);
+                if (!cr.success) {
+                    std::cerr << RED << "Cannot run Track Usage / Record Run without a customer." << RESET << std::endl;
+                }
+            }
+            if (!customer_id.empty()) {
+                results.push_back(check_track_usage(client, customer_id));
+                results.push_back(check_record_run(client, customer_id));
+            }
         }
 
         // Print results

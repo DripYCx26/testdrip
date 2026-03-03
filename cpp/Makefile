@@ -26,9 +26,16 @@ CXXFLAGS  ?= -std=c++11 -Wall -Wextra -O2
 SDK_DIR    = ../cpp-sdk
 BUILD_DIR  = build
 
+# Windows: use .exe suffix
+ifeq ($(OS),Windows_NT)
+  EXE = .exe
+else
+  EXE =
+endif
+
 # Targets
-HEALTH_BIN = $(BUILD_DIR)/drip-health
-ML_BIN     = $(BUILD_DIR)/drip-ml-test
+HEALTH_BIN = $(BUILD_DIR)/drip-health$(EXE)
+ML_BIN     = $(BUILD_DIR)/drip-ml-test$(EXE)
 
 .PHONY: all run run-ml run-all run-quick run-verbose clean sdk
 
