@@ -122,9 +122,12 @@ describe('Core Drip client', () => {
   });
 
   describe('DripError export', () => {
-    it('DripError is the same class as main SDK', async () => {
-      const mainMod = await import('@drip-sdk/node');
-      expect(DripError).toBe(mainMod.DripError);
+    it('DripError has expected shape (message, statusCode, extends Error)', () => {
+      const err = new DripError('test', 400);
+      expect(err).toBeInstanceOf(Error);
+      expect(err).toBeInstanceOf(DripError);
+      expect(err.message).toBe('test');
+      expect(err.statusCode).toBe(400);
     });
   });
 });

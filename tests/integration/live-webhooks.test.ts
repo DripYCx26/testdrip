@@ -1,14 +1,16 @@
 /**
  * Integration Tests: Real backend - webhook CRUD.
- * Requires DRIP_API_KEY and DRIP_BASE_URL environment variables.
+ * Requires DRIP_API_KEY and DRIP_API_URL or DRIP_BASE_URL environment variables.
  * Must use a secret key (sk_) for webhook operations.
  */
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { Drip, DripError } from '@drip-sdk/node';
 
 const apiKey = process.env.DRIP_API_KEY;
-const baseUrl = process.env.DRIP_BASE_URL;
-const shouldRun = !!(apiKey && baseUrl && apiKey.startsWith('sk_'));
+const rawUrl = process.env.DRIP_BASE_URL || process.env.DRIP_API_URL || 'https://drip-app-hlunj.ondigitalocean.app';
+const baseUrl = rawUrl?.endsWith('/v1') ? rawUrl : `${rawUrl}/v1`;
+
+const shouldRun = !!(apiKey && apiKey.startsWith('sk_'));
 
 describe.skipIf(!shouldRun)('Live Webhooks integration', () => {
   let drip: Drip;

@@ -231,21 +231,23 @@ describe('Next.js withDrip contract', () => {
 
 describe('hasPaymentProofHeaders', () => {
   it('returns false when no payment headers', () => {
-    const headers = new Headers({ 'content-type': 'application/json' });
-    expect(hasPaymentProofHeaders(headers)).toBe(false);
+    const req = { headers: { 'content-type': 'application/json' } };
+    expect(hasPaymentProofHeaders(req)).toBe(false);
   });
 
   it('returns true when all payment proof headers present', () => {
-    const headers = new Headers({
-      'x-payment-signature': '0x' + 'ab'.repeat(65),
-      'x-payment-session-key': 'ab'.repeat(32),
-      'x-payment-smart-account': 'ab'.repeat(20),
-      'x-payment-timestamp': String(Math.floor(Date.now() / 1000)),
-      'x-payment-amount': '0.01',
-      'x-payment-recipient': 'ab'.repeat(20),
-      'x-payment-usage-id': 'usage_123',
-      'x-payment-nonce': 'nonce_123',
-    });
-    expect(hasPaymentProofHeaders(headers)).toBe(true);
+    const req = {
+      headers: {
+        'x-payment-signature': '0x' + 'ab'.repeat(65),
+        'x-payment-session-key': 'ab'.repeat(32),
+        'x-payment-smart-account': 'ab'.repeat(20),
+        'x-payment-timestamp': String(Math.floor(Date.now() / 1000)),
+        'x-payment-amount': '0.01',
+        'x-payment-recipient': 'ab'.repeat(20),
+        'x-payment-usage-id': 'usage_123',
+        'x-payment-nonce': 'nonce_123',
+      },
+    };
+    expect(hasPaymentProofHeaders(req)).toBe(true);
   });
 });

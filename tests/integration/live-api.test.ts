@@ -1,15 +1,16 @@
 /**
  * Integration Tests: Real backend - customers, usage, charges, balance.
- * Requires DRIP_API_KEY and DRIP_BASE_URL environment variables.
+ * Requires DRIP_API_KEY and DRIP_API_URL or DRIP_BASE_URL environment variables.
  * Auto-skips when env vars are not set.
  */
 import { describe, it, expect, beforeAll } from 'vitest';
 import { Drip, DripError } from '@drip-sdk/node';
 
 const apiKey = process.env.DRIP_API_KEY;
-const baseUrl = process.env.DRIP_BASE_URL;
+const rawUrl = process.env.DRIP_BASE_URL || process.env.DRIP_API_URL || 'https://drip-app-hlunj.ondigitalocean.app';
+const baseUrl = rawUrl?.endsWith('/v1') ? rawUrl : `${rawUrl}/v1`;
 
-const shouldRun = !!(apiKey && baseUrl);
+const shouldRun = !!apiKey;
 
 describe.skipIf(!shouldRun)('Live API integration', () => {
   let drip: Drip;
