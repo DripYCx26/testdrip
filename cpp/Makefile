@@ -37,7 +37,7 @@ endif
 HEALTH_BIN = $(BUILD_DIR)/drip-health$(EXE)
 ML_BIN     = $(BUILD_DIR)/drip-ml-test$(EXE)
 
-.PHONY: all run run-ml run-all run-quick run-verbose clean sdk
+.PHONY: all run run-ml run-all run-quick run-verbose run-race clean sdk
 
 all: $(HEALTH_BIN) $(ML_BIN)
 
@@ -70,6 +70,9 @@ run: $(HEALTH_BIN)
 
 run-quick: $(HEALTH_BIN)
 	@$(HEALTH_BIN) --quick
+
+run-race: $(HEALTH_BIN)
+	@$(HEALTH_BIN) --race
 
 run-verbose: $(HEALTH_BIN)
 	@$(HEALTH_BIN) --verbose
