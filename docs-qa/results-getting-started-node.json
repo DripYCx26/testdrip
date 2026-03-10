@@ -1,0 +1,51 @@
+{
+  "phase": "getting-started-node",
+  "pass": 11,
+  "fail": 0,
+  "results": [
+    {
+      "name": "DRIP_API_KEY is in environment",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.createCustomer (GETTING_STARTED Step 1)",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.listCustomers (GETTING_STARTED Step 2)",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.trackUsage (GETTING_STARTED Step 4)",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.trackUsage with quantity & metadata (GETTING_STARTED Step 5)",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.trackUsage full step 5 style",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.charge (GETTING_STARTED Step 6)",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.createWebhook (GETTING_STARTED Step 8)",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.deleteWebhook (cleanup)",
+      "status": "PASS"
+    },
+    {
+      "name": "DripError on bad customer ID (GETTING_STARTED Step 9)",
+      "status": "PASS"
+    },
+    {
+      "name": "Singleton and class produce same results",
+      "status": "PASS"
+    }
+  ]
+}

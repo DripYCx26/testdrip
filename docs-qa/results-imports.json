@@ -1,0 +1,139 @@
+{
+  "phase": "imports",
+  "pass": 33,
+  "fail": 0,
+  "results": [
+    {
+      "name": "import { Drip } from \"@drip-sdk/node\" resolves",
+      "status": "PASS"
+    },
+    {
+      "name": "import { drip } from \"@drip-sdk/node\" resolves",
+      "status": "PASS"
+    },
+    {
+      "name": "import { DripError } from \"@drip-sdk/node\" resolves",
+      "status": "PASS"
+    },
+    {
+      "name": "import { withDrip } from \"@drip-sdk/node/next\" resolves",
+      "status": "PASS"
+    },
+    {
+      "name": "import { dripMiddleware } from \"@drip-sdk/node/express\" resolves",
+      "status": "PASS"
+    },
+    {
+      "name": "import from \"@drip-sdk/node/middleware\" resolves (CLAUDE_INTEGRATION_PROMPT path)",
+      "status": "PASS"
+    },
+    {
+      "name": "new Drip() without DRIP_API_KEY throws",
+      "status": "PASS"
+    },
+    {
+      "name": "new Drip({ apiKey: \"sk_test_fake\" }) succeeds",
+      "status": "PASS"
+    },
+    {
+      "name": "client.keyType exists and returns correct type",
+      "status": "PASS"
+    },
+    {
+      "name": "client.keyType returns \"public\" for pk_ key",
+      "status": "PASS"
+    },
+    {
+      "name": "client.baseUrl exists and has default value",
+      "status": "PASS"
+    },
+    {
+      "name": "client.createCustomer exists",
+      "status": "PASS"
+    },
+    {
+      "name": "client.getCustomer exists",
+      "status": "PASS"
+    },
+    {
+      "name": "client.listCustomers exists",
+      "status": "PASS"
+    },
+    {
+      "name": "client.getOrCreateCustomer exists",
+      "status": "PASS"
+    },
+    {
+      "name": "client.trackUsage exists",
+      "status": "PASS"
+    },
+    {
+      "name": "client.charge exists",
+      "status": "PASS"
+    },
+    {
+      "name": "client.chargeAsync exists",
+      "status": "PASS"
+    },
+    {
+      "name": "client.recordRun exists",
+      "status": "PASS"
+    },
+    {
+      "name": "client.startRun exists",
+      "status": "PASS"
+    },
+    {
+      "name": "client.endRun exists",
+      "status": "PASS"
+    },
+    {
+      "name": "client.emitEvent exists",
+      "status": "PASS"
+    },
+    {
+      "name": "client.emitEventsBatch exists",
+      "status": "PASS"
+    },
+    {
+      "name": "client.listCharges exists",
+      "status": "PASS"
+    },
+    {
+      "name": "client.getCharge exists",
+      "status": "PASS"
+    },
+    {
+      "name": "client.getBalance exists",
+      "status": "PASS"
+    },
+    {
+      "name": "client.createWebhook exists",
+      "status": "PASS"
+    },
+    {
+      "name": "client.listWebhooks exists",
+      "status": "PASS"
+    },
+    {
+      "name": "client.deleteWebhook exists",
+      "status": "PASS"
+    },
+    {
+      "name": "client.checkEntitlement exists",
+      "status": "PASS"
+    },
+    {
+      "name": "client.ping exists",
+      "status": "PASS"
+    },
+    {
+      "name": "Drip.generateIdempotencyKey exists",
+      "status": "PASS"
+    },
+    {
+      "name": "Drip.verifyWebhookSignature exists",
+      "status": "PASS"
+    }
+  ]
+}

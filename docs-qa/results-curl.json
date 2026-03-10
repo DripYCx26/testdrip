@@ -1,0 +1,15 @@
+{"phase":"curl","results":[
+{"name":"POST /v1/customers (Step 1)","status":"PASS","httpCode":201}
+,
+{"name":"GET /v1/customers (Step 2)","status":"PASS","httpCode":200}
+,
+{"name":"POST /v1/pricing-plans (Step 3)","status":"FAIL","httpCode":403,"error":"{\"error\":\"Forbidden\",\"code\":\"FORBIDDEN\"} "}
+,
+{"name":"POST /v1/events (Step 4 — docs curl command)","status":"PASS","httpCode":201}
+,
+{"name":"POST /v1/events with quantity (Step 5)","status":"PASS","httpCode":201}
+,
+{"name":"POST /v1/usage (Step 6 — charge curl)","status":"PASS","httpCode":201}
+,
+{"name":"POST /v1/usage/internal (what SDK trackUsage actually calls)","status":"PASS","httpCode":201}
+],"pass":6,"fail":1}

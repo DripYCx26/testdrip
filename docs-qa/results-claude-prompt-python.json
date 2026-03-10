@@ -1,0 +1,27 @@
+{
+  "phase": "claude-prompt-python",
+  "pass": 5,
+  "fail": 0,
+  "results": [
+    {
+      "name": "from drip import Drip",
+      "status": "PASS"
+    },
+    {
+      "name": "drip = Drip() reads DRIP_API_KEY from env",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.create_customer(external_customer_id=...)",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.track_usage(customer_id, meter, quantity, metadata)",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.record_run(customer_id, workflow, events, status)",
+      "status": "PASS"
+    }
+  ]
+}

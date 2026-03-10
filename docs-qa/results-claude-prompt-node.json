@@ -1,0 +1,31 @@
+{
+  "phase": "claude-prompt-node",
+  "pass": 6,
+  "fail": 0,
+  "results": [
+    {
+      "name": "import { Drip } from \"@drip-sdk/node\" works",
+      "status": "PASS"
+    },
+    {
+      "name": "const drip = new Drip() reads DRIP_API_KEY from env",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.createCustomer({ externalCustomerId })",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.trackUsage({ customerId, meter, quantity, metadata })",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.recordRun({ customerId, workflow, events, status })",
+      "status": "PASS"
+    },
+    {
+      "name": "customer response has .id property (not .customer_id)",
+      "status": "PASS"
+    }
+  ]
+}

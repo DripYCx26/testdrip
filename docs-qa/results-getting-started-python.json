@@ -1,0 +1,47 @@
+{
+  "phase": "getting-started-python",
+  "pass": 10,
+  "fail": 0,
+  "results": [
+    {
+      "name": "DRIP_API_KEY available",
+      "status": "PASS"
+    },
+    {
+      "name": "from drip import drip (GETTING_STARTED singleton style)",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.create_customer (GETTING_STARTED Step 1)",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.list_customers (GETTING_STARTED Step 2)",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.track_usage (GETTING_STARTED Step 4)",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.track_usage with quantity & metadata (GETTING_STARTED Step 5)",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.track_usage full step 5 style",
+      "status": "PASS"
+    },
+    {
+      "name": "drip.charge (GETTING_STARTED Step 6)",
+      "status": "PASS"
+    },
+    {
+      "name": "DripError on bad customer (GETTING_STARTED Step 9)",
+      "status": "PASS"
+    },
+    {
+      "name": "Singleton and class produce same results",
+      "status": "PASS"
+    }
+  ]
+}
